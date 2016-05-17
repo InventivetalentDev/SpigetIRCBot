@@ -25,3 +25,7 @@ Search an author, example:
 ```
 ?spiget author md_5
 ```
+Or search yourself:
+```
+?spiget me
+```
