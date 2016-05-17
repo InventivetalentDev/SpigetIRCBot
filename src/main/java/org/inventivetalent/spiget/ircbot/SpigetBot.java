@@ -79,6 +79,10 @@ public class SpigetBot extends PircBot {
 					searchTypeId = 1;
 				}
 				searchQuery = Joiner.on(" ").join(Arrays.copyOfRange(args, 1, args.length));
+			} else if ("me".equalsIgnoreCase(args[0])) {
+				searchType = "authors";
+				searchTypeId = 1;
+				searchQuery = sender;
 			} else {
 				searchQuery = Joiner.on(" ").join(args);
 			}
