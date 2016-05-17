@@ -34,7 +34,7 @@
 
     <groupId>org.inventivetalent</groupId>
     <artifactId>spiget-irc</artifactId>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
 
 
     <build>
@@ -48,6 +48,10 @@
             </resource>
             <resource>
                 <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>pom.properties</include>
+                </includes>
             </resource>
         </resources>
         <plugins>

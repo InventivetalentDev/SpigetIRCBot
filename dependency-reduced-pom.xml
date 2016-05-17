@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.inventivetalent</groupId>
   <artifactId>spiget-irc</artifactId>
-  <version>1.0.0</version>
+  <version>1.1.0</version>
   <build>
     <sourceDirectory>src/main/java</sourceDirectory>
     <resources>
@@ -14,7 +14,11 @@
         </excludes>
       </resource>
       <resource>
+        <filtering>true</filtering>
         <directory>src/main/resources</directory>
+        <includes>
+          <include>pom.properties</include>
+        </includes>
       </resource>
     </resources>
     <plugins>

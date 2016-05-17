@@ -43,10 +43,24 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Arrays;
+import java.util.Properties;
 
 public class SpigetBot extends PircBot {
 
-	static final String VERSION = "1.0";
+	static String VERSION;
+
+	static {
+		try {
+			try (InputStream in = SpigetBot.class.getResourceAsStream("/pom.properties")) {
+				Properties properties = new Properties();
+				properties.load(in);
+				VERSION = properties.getProperty("spiget.ircbot.version");
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+			VERSION = "unknown";
+		}
+	}
 
 	SpigetBot() {
 		setName("SpigetBot");
