@@ -103,7 +103,7 @@ public class SpigetBot extends PircBot {
 
 			System.out.println("Searching " + searchType + " for '" + searchQuery + "'");
 			try {
-				HttpURLConnection connection = (HttpURLConnection) new URL("https://api.spiget.org/v1/search/" + searchType + "/" + searchQuery + "?ut=" + System.currentTimeMillis()).openConnection();
+				HttpURLConnection connection = (HttpURLConnection) new URL("https://api.spiget.org/v1/search/" + searchType + "/" + searchQuery + "?size=1000&ut=" + System.currentTimeMillis()).openConnection();
 				connection.setRequestProperty("User-Agent", "SpigetIRCBot/1.0");
 				if (connection.getResponseCode() != 200) {
 					sendMessage(channel, sender + ": Sorry, no results found (" + connection.getResponseCode() + ")");
@@ -121,6 +121,8 @@ public class SpigetBot extends PircBot {
 						sendMessage(channel, sender + ": " + singleResult.get(searchTypeId == 0 ? "name" : "username").getAsString() + ", https://" + (searchTypeId == 0 ? "r" : "a") + ".spiget.org/" + singleResult.get("id").getAsInt());
 						return;
 					} else {
+						sendMessage(channel, "(" + result.size() + " results)");
+
 						double smallest = 1024;// This should be more than enough
 						String bestName = null;
 						int bestId = 0;
@@ -134,7 +136,6 @@ public class SpigetBot extends PircBot {
 							}
 						}
 
-						sendMessage(channel, "(Multiple results)");
 						if (bestName != null) {
 							sendMessage(channel, sender + ": " + bestName + ", https://" + (searchTypeId == 0 ? "r" : "a") + ".spiget.org/" + bestId);
 						}
