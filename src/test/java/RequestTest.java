@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.*;
 
 public class RequestTest {
@@ -40,6 +41,7 @@ public class RequestTest {
 				System.out.println(methodMap);
 
 				String format = "%-3s | %-32.32s | %-32.48s";
+				DecimalFormat decimalFormat = new DecimalFormat("###,##0");
 				List<String> messages = new ArrayList<>();
 				messages.add(String.format(format, "#", "User-Agent", "Method"));
 				messages.add(String.format(format, "---", Strings.repeat("-", 32), Strings.repeat("-", 32)));
@@ -47,8 +49,8 @@ public class RequestTest {
 					Map.Entry<String, JsonElement> userAgentEntry = userAgentMap.size() > i ? userAgentMap.get(i) : null;
 					Map.Entry<String, JsonElement> methodEntry = methodMap.size() > i ? methodMap.get(i) : null;
 
-					String userAgent = userAgentEntry != null ? "(" + userAgentEntry.getValue().getAsInt() + ") " + userAgentEntry.getKey() : "";
-					String method = methodEntry != null ? "(" + methodEntry.getValue().getAsInt() + ") " + methodEntry.getKey() : "";
+					String userAgent = userAgentEntry != null ? "(" + decimalFormat.format(userAgentEntry.getValue().getAsInt()) + ") " + userAgentEntry.getKey() : "";
+					String method = methodEntry != null ? "(" + decimalFormat.format(methodEntry.getValue().getAsInt()) + ") " + methodEntry.getKey() : "";
 
 					messages.add(String.format(format, "#" + (i + 1), userAgent, method));
 				}

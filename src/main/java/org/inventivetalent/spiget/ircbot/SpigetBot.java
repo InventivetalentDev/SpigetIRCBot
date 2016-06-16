@@ -43,6 +43,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.*;
 
 public class SpigetBot extends PircBot {
@@ -97,8 +98,10 @@ public class SpigetBot extends PircBot {
 						JsonObject result = new JsonParser().parse(new InputStreamReader(in)).getAsJsonObject();
 						JsonObject today = result.entrySet().iterator().next().getValue().getAsJsonObject();
 
+						DecimalFormat decimalFormat = new DecimalFormat("###,##0");
+
 						// Total
-						sendMessage(channel, sender + ": Today's total: " + today.get("total").getAsInt() + " requests");
+						sendMessage(channel, sender + ": Today's total: " + decimalFormat.format(today.get("total").getAsInt()) + " requests");
 
 						// User Agents
 						List<Map.Entry<String, JsonElement>> userAgentMap = new LinkedList<>(today.getAsJsonObject("user_agents").entrySet());
@@ -116,8 +119,8 @@ public class SpigetBot extends PircBot {
 							Map.Entry<String, JsonElement> userAgentEntry = userAgentMap.size() > i ? userAgentMap.get(i) : null;
 							Map.Entry<String, JsonElement> methodEntry = methodMap.size() > i ? methodMap.get(i) : null;
 
-							String userAgent = userAgentEntry != null ? "(" + userAgentEntry.getValue().getAsInt() + ") " + userAgentEntry.getKey() : "";
-							String method = methodEntry != null ? "(" + methodEntry.getValue().getAsInt() + ") " + methodEntry.getKey() : "";
+							String userAgent = userAgentEntry != null ? "(" + decimalFormat.format(userAgentEntry.getValue().getAsInt()) + ") " + userAgentEntry.getKey() : "";
+							String method = methodEntry != null ? "(" + decimalFormat.format(methodEntry.getValue().getAsInt()) + ") " + methodEntry.getKey() : "";
 
 							messages.add(String.format(format, "#" + (i + 1), userAgent, method));
 						}
