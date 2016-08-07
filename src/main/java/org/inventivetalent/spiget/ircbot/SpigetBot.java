@@ -66,7 +66,14 @@ public class SpigetBot extends PircBot {
 	SpigetBot() {
 		setName("SpigetBot");
 		setVersion("SpigetIRCBot " + VERSION + " - spiget.org");
+	}
 
+	@Override
+	protected void onJoin(String channel, String sender, String login, String hostname) {
+		super.onJoin(channel, sender, login, hostname);
+		if (getNick().equals(sender)) {
+			setMode(getNick(), "+B");
+		}
 	}
 
 	@Override
