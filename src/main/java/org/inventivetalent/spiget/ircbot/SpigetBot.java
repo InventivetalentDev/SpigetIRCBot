@@ -91,8 +91,8 @@ public class SpigetBot extends PircBot {
 					}
 				}
 				try {
-					HttpURLConnection connection = (HttpURLConnection) new URL("https://api.spiget.org/v1/metrics/requests/1?ut=" + System.currentTimeMillis()).openConnection();
-					connection.setRequestProperty("User-Agent", "SpigetIRCBot/1.0");
+					HttpURLConnection connection = (HttpURLConnection) new URL("https://api.spiget.org/v2/metrics/requests/1?ut=" + System.currentTimeMillis()).openConnection();
+					connection.setRequestProperty("User-Agent", "SpigetIRCBot/1.4");
 
 					try (InputStream in = connection.getInputStream()) {
 						JsonObject result = new JsonParser().parse(new InputStreamReader(in)).getAsJsonObject();
@@ -162,8 +162,8 @@ public class SpigetBot extends PircBot {
 
 			System.out.println("Searching " + searchType + " for '" + searchQuery + "'");
 			try {
-				HttpURLConnection connection = (HttpURLConnection) new URL("https://api.spiget.org/v1/search/" + searchType + "/" + searchQuery + "?size=1000&ut=" + System.currentTimeMillis()).openConnection();
-				connection.setRequestProperty("User-Agent", "SpigetIRCBot/1.0");
+				HttpURLConnection connection = (HttpURLConnection) new URL("https://api.spiget.org/v2/search/" + searchType + "/" + searchQuery + "?size=1000&ut=" + System.currentTimeMillis()).openConnection();
+				connection.setRequestProperty("User-Agent", "SpigetIRCBot/1.4");
 				if (connection.getResponseCode() != 200) {
 					sendMessage(channel, sender + ": Sorry, no results found (" + connection.getResponseCode() + ")");
 					return;
@@ -177,7 +177,7 @@ public class SpigetBot extends PircBot {
 					}
 					if (result.size() == 1) {
 						JsonObject singleResult = result.get(0).getAsJsonObject();
-						sendMessage(channel, sender + ": " + singleResult.get(searchTypeId == 0 ? "name" : "username").getAsString() + ", https://" + (searchTypeId == 0 ? "r" : "a") + ".spiget.org/" + singleResult.get("id").getAsInt());
+						sendMessage(channel, sender + ": " + singleResult.get("name").getAsString() + ", https://" + (searchTypeId == 0 ? "r" : "a") + ".spiget.org/" + singleResult.get("id").getAsInt());
 						return;
 					} else {
 						sendMessage(channel, "(" + result.size() + " results)");
@@ -186,7 +186,7 @@ public class SpigetBot extends PircBot {
 						String bestName = null;
 						int bestId = 0;
 						for (JsonElement jsonElement : result) {
-							String name = jsonElement.getAsJsonObject().get(searchTypeId == 0 ? "name" : "username").getAsString();
+							String name = jsonElement.getAsJsonObject().get("name").getAsString();
 							double distance = LevenshteinDistance.computeDistance(searchQuery, name);
 							if (distance < smallest) {
 								smallest = distance;

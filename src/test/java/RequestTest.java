@@ -16,8 +16,8 @@ public class RequestTest {
 	@Test
 	public void sortTest() {
 		try {
-			HttpURLConnection connection = (HttpURLConnection) new URL("https://api.spiget.org/v1/metrics/requests/1?ut=" + System.currentTimeMillis()).openConnection();
-			connection.setRequestProperty("User-Agent", "SpigetIRCBot/1.0");
+			HttpURLConnection connection = (HttpURLConnection) new URL("https://api.spiget.org/v2/metrics/requests/1?ut=" + System.currentTimeMillis()).openConnection();
+			connection.setRequestProperty("User-Agent", "SpigetIRCBot/1.4");
 
 			try (InputStream in = connection.getInputStream()) {
 				JsonObject result = new JsonParser().parse(new InputStreamReader(in)).getAsJsonObject();
