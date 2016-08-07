@@ -84,14 +84,18 @@ public class SpigetBot extends PircBot {
 			// Request stats
 			if ("requests".equalsIgnoreCase(args[0])) {
 				int amount = 10;
+				boolean fullUserAgents = false;
 				if (args.length > 1) {
 					try {
 						amount = Integer.parseInt(args[1]);
 					} catch (NumberFormatException ignored) {
 					}
+					if (args.length > 2 && args[2] != null) {
+						fullUserAgents = args[2].toLowerCase().contains("full-user-agents");
+					}
 				}
 				try {
-					HttpURLConnection connection = (HttpURLConnection) new URL("https://api.spiget.org/v2/metrics/requests/1?ut=" + System.currentTimeMillis()).openConnection();
+					HttpURLConnection connection = (HttpURLConnection) new URL("https://api.spiget.org/v2/metrics/requests/1?ut=" + System.currentTimeMillis() + (fullUserAgents ? "" : "&stripUaVersion=true")).openConnection();
 					connection.setRequestProperty("User-Agent", "SpigetIRCBot/1.4");
 
 					try (InputStream in = connection.getInputStream()) {
