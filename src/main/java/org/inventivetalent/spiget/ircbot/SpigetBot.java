@@ -84,7 +84,7 @@ public class SpigetBot extends PircBot {
 			String[] args = Iterables.toArray(iterable, String.class);
 
 			if (args.length <= 0) {
-				sendMessage(channel, sender + ": https://spiget.org");
+				sendMessage(channel, sender + ": https://spiget.org | https://github.com/InventivetalentDev/SpigetIRCBot");
 				return;
 			}
 
