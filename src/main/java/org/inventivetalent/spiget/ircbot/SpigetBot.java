@@ -65,7 +65,7 @@ public class SpigetBot extends PircBot {
 
 	SpigetBot() {
 		setName("SpigetBot");
-		setVersion("SpigetIRCBot " + VERSION + " - spiget.org");
+		setVersion("SpigetIRCBot " + VERSION + " - https://github.com/InventivetalentDev/SpigetIRCBot");
 	}
 
 	@Override
