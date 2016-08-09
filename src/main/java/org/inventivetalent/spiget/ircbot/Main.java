@@ -39,7 +39,7 @@ import java.util.List;
 public class Main {
 
 	public static void main(String... args) throws IOException, IrcException {
-		String password = Files.readFirstLine(new File("password.txt"), StandardCharsets.UTF_8);
+		List<String> login = Files.readLines(new File("login.txt"), StandardCharsets.UTF_8);
 		List<String> connection = Files.readLines(new File("connection.txt"), StandardCharsets.UTF_8);
 		String host = connection.get(0);
 		int port = 6667;
@@ -49,9 +49,9 @@ public class Main {
 			port = Integer.parseInt(split[1]);
 		}
 
-		final SpigetBot bot = new SpigetBot();
+		final SpigetBot bot = new SpigetBot(login.get(0));
 		bot.setVerbose(true);
-		bot.connect(host, port, password);
+		bot.connect(host, port, login.get(1));
 
 		boolean first = true;
 		for (String s : connection) {
@@ -62,8 +62,8 @@ public class Main {
 			bot.joinChannel(s);
 		}
 
-		bot.changeNick("SpigetBot");
-		bot.identify(password);
+		bot.changeNick(login.get(0));
+		bot.identify(login.get(1));
 
 		Runtime.getRuntime().addShutdownHook(new Thread() {
 			@Override

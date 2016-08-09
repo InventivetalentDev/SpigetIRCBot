@@ -50,6 +50,8 @@ public class SpigetBot extends PircBot {
 
 	static String VERSION;
 
+	String nick;
+
 	static {
 		try {
 			try (InputStream in = SpigetBot.class.getResourceAsStream("/pom.properties")) {
@@ -63,8 +65,9 @@ public class SpigetBot extends PircBot {
 		}
 	}
 
-	SpigetBot() {
-		setName("SpigetBot");
+	SpigetBot(String nick) {
+		this.nick = nick;
+		setName(nick);
 		setVersion("SpigetIRCBot " + VERSION + " - https://github.com/InventivetalentDev/SpigetIRCBot");
 	}
 
